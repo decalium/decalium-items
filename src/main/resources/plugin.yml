@@ -1,0 +1,11 @@
+name: DecaliumCustomItems
+version: ${project.version}
+main: com.manya.decaliumcustomitems.DecaliumCustomItems
+api-version: 1.16
+authors: [ manya ]
+depend:
+  - ProtocolLib
+description: super cool
+commands:
+  customitem:
+
