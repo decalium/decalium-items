@@ -27,7 +27,9 @@ public class Bag extends Item implements MetadataHolder {
                 .customModelData(33)
                 .lore(
                         (p, i) -> {
-                            List<Component> lore = new ArrayList<>(Arrays.asList(Component.text("Контент: ").decoration(TextDecoration.ITALIC, false).color(NamedTextColor.GRAY)));
+                            List<Component> lore = new ArrayList<>(Arrays.asList(Component.text("Контент: ")
+                                    .decoration(TextDecoration.ITALIC, false)
+                                    .color(NamedTextColor.GRAY)));
                             WrappedStack stack = WrappedStack.asCustomStack(i);
                             BagMeta meta = (BagMeta) stack.getCustomMeta();
                             lore.addAll(meta.content().stream()

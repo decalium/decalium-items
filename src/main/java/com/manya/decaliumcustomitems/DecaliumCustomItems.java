@@ -1,13 +1,19 @@
 package com.manya.decaliumcustomitems;
 
 import com.comphenix.protocol.ProtocolLibrary;
+import com.manya.decaliumcustomitems.event.EquipmentEventListener;
 import com.manya.decaliumcustomitems.item.CustomMaterial;
 import com.manya.decaliumcustomitems.example.bag.Bag;
+import com.manya.decaliumcustomitems.item.Item;
+import com.manya.decaliumcustomitems.item.modifier.DefaultModifier;
 import com.manya.decaliumcustomitems.listener.GuiListener;
 import com.manya.decaliumcustomitems.listener.Selectable;
 import com.manya.decaliumcustomitems.protocol.ItemListener;
 import com.manya.decaliumcustomitems.example.Katana;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -32,6 +38,9 @@ public void onEnable() {
 	ProtocolLibrary.getProtocolManager().addPacketListener(new ItemListener(this));
 	Selectable.registerListener(this);
 	CustomMaterial.registerMaterial("katana_sword", new Katana());
+	Item exampleItem = new Item(Material.AIR, DefaultModifier.builder().build());
+	exampleItem.addListener(EquipmentEventListener.PLAYER_INTERACT, (i, e) -> e.getPlayer().sendMessage(Component.text("hi")), EquipmentSlot.HAND);
+
 	CustomMaterial.registerMaterial("bag", new Bag());
 
 }
