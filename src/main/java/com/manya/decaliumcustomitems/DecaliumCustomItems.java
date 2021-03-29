@@ -32,7 +32,7 @@ public void onEnable() {
 	ProtocolLibrary.getProtocolManager().addPacketListener(new ItemListener(this));
 	Selectable.registerListener(this);
 	CustomMaterial.registerMaterial("katana_sword", new Katana());
-	CustomMaterial.registerMaterial("bag_epta", new Bag());
+	CustomMaterial.registerMaterial("bag", new Bag());
 
 }
 public void onDisable() {
