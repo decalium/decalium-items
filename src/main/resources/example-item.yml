@@ -1,0 +1,31 @@
+original-material: IRON_SWORD
+modifier:
+  name: Katana
+  lore:
+    - 'hi, %player_name%'
+  attribute-modifiers:
+    attack-damage:
+      type: GENERIC_ATTACK_DAMAGE
+      slot: HAND
+      operation: ADD_NUMBER
+      value: 7
+  custom-model-data: 313
+listeners:
+  PLAYER_INTERACT:
+    slots:
+      - HAND
+      - OFF_HAND
+    actions:
+      send-message:
+        type: SEND_MESSAGE
+        data:
+          text: <gradient:red:dark_red>thats kinda bulky, %player_name%</gradient>
+      set-data:
+        type: SET_METADATA_VALUE
+        data:
+          key: player_name
+          value: %player_name%
+      read-data:
+        type: SEND_MESSAGE
+        data:
+          text: [metadata]player_name[/metadata] is ur name!

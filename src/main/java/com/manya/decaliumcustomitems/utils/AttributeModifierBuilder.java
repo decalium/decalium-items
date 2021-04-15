@@ -10,13 +10,24 @@ public class AttributeModifierBuilder {
 
     private final Attribute attribute;
     private double value;
+    private String name;
+    private UUID uuid = UUID.randomUUID();
     private AttributeModifier.Operation operation = AttributeModifier.Operation.ADD_NUMBER;
     private EquipmentSlot slot = EquipmentSlot.HAND;
     public AttributeModifierBuilder(Attribute attribute) {
         this.attribute = attribute;
+        name(attribute.getKey().getKey());
     }
     public AttributeModifierBuilder value(double value) {
         this.value = value;
+        return this;
+    }
+    public AttributeModifierBuilder name(String name) {
+        this.name = name;
+        return this;
+    }
+    public AttributeModifierBuilder uuid(UUID uuid) {
+        this.uuid = uuid;
         return this;
     }
     public AttributeModifierBuilder operation(AttributeModifier.Operation operation) {
@@ -31,8 +42,8 @@ public class AttributeModifierBuilder {
         return new AttributeModifierContainer(
                 attribute,
                 new AttributeModifier(
-                        UUID.randomUUID(),
-                        attribute.getKey().getKey(),
+                        uuid,
+                        name,
                         value,
                         operation,
                         slot

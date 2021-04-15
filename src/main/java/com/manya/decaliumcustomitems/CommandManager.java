@@ -3,6 +3,9 @@ package com.manya.decaliumcustomitems;
 import com.google.gson.Gson;
 import com.manya.decaliumcustomitems.item.CustomMaterial;
 import com.manya.decaliumcustomitems.item.WrappedStack;
+import com.manya.decaliumcustomitems.item.enchantments.EnchantmentTest;
+import com.manya.decaliumcustomitems.utils.DataType;
+import com.manya.decaliumcustomitems.utils.persistentdatatype.ListDataType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -11,6 +14,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -20,17 +24,21 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CommandManager implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		Player p = (Player) sender;
+
 		if(args[0].equalsIgnoreCase("loretest")) {
-			ItemMeta meta = p.getInventory().getItemInMainHand().getItemMeta();
-			meta.lore(Arrays.asList(Component.text(args[1])));
-			p.getInventory().getItemInMainHand().setItemMeta(meta);
+			ItemStack toTest = p.getEquipment().getItemInMainHand();
+
+			toTest.addUnsafeEnchantment(DecaliumCustomItems.get().test(), 3);
+			System.out.println(toTest.getEnchantments().keySet().stream().map(e -> e.getKey().asString()).collect(Collectors.joining(", ")));
 		}
 		else if(args[0].equalsIgnoreCase("test")) {
 			ItemStack item = new ItemStack(Material.DIAMOND_SWORD, 1);
@@ -52,7 +60,11 @@ public class CommandManager implements CommandExecutor {
 			((Player) sender).getInventory().addItem(item);
 
 		} else {
-			p.getInventory().addItem(new WrappedStack(CustomMaterial.of(args[0])).get());
+			p.getInventory().addItem(
+					new WrappedStack(
+							CustomMaterial.of(NamespacedKey.fromString(args[0]))
+					).get()
+			);
 		}
 
 

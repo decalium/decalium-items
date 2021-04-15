@@ -6,6 +6,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 public class ItemStackDataType implements PersistentDataType<byte[], ItemStack> {
+    private ItemStackDataType() {}
+    public static final ItemStackDataType INSTANCE = new ItemStackDataType();
     @Override
     public @NotNull Class<byte[]> getPrimitiveType() {
         return byte[].class;
@@ -17,12 +19,12 @@ public class ItemStackDataType implements PersistentDataType<byte[], ItemStack> 
     }
 
     @Override
-    public byte @NotNull [] toPrimitive(@NotNull ItemStack complex, @NotNull PersistentDataAdapterContext context) {
+    public @NotNull byte[] toPrimitive(@NotNull ItemStack complex, @NotNull PersistentDataAdapterContext context) {
         return complex.serializeAsBytes();
     }
 
     @Override
-    public @NotNull ItemStack fromPrimitive(byte @NotNull [] primitive, @NotNull PersistentDataAdapterContext context) {
+    public @NotNull ItemStack fromPrimitive(@NotNull byte[] primitive, @NotNull PersistentDataAdapterContext context) {
         return ItemStack.deserializeBytes(primitive);
     }
 }

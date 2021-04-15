@@ -59,6 +59,10 @@
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
@@ -88,9 +92,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>me.gepron1x</groupId>
-            <artifactId>DecaliumCore</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.10.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -99,21 +103,20 @@
             <version>13.0</version>
         </dependency>
         <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>joor-java-8</artifactId>
-            <version>0.9.13</version>
-        </dependency>
-        <dependency>
             <groupId>net.kyori</groupId>
-            <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>net.minecraft</groupId>
-            <artifactId>server</artifactId>
-            <version>1.1</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/geps/Documents/PaperServer/cache/patched_1.16.5.jar</systemPath>
+            <groupId>space.arim.dazzleconf</groupId>
+            <artifactId>dazzleconf-ext-snakeyaml</artifactId>
+            <version>1.2.0-M2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.graalvm.js/js -->
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>js</artifactId>
+            <version>21.0.0.2</version>
         </dependency>
 
     </dependencies>

@@ -4,6 +4,8 @@ import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;
 
 public class BooleanDataType implements PersistentDataType<Byte, Boolean> {
+    private BooleanDataType() {}
+    public static final BooleanDataType INSTANCE = new BooleanDataType();
     @Override
     public Class<Byte> getPrimitiveType() {
         return Byte.class;

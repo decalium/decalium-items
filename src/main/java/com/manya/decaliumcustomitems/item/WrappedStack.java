@@ -29,7 +29,7 @@ public class WrappedStack {
        material.getItem().itemModifier().modify(handle);
        ItemMeta meta = handle.getItemMeta();
        PersistentDataContainer container = meta.getPersistentDataContainer();
-     container.set(CustomMaterial.TYPE, STRING, material.getId());
+     container.set(CustomMaterial.TYPE, DataType.NAMESPACE_KEY, material.getKey());
      if(material.getItem() instanceof MetadataHolder) {
          metaFactory = ((MetadataHolder) material.getItem()).metaFactory();
         customMeta = metaFactory.createDefault();

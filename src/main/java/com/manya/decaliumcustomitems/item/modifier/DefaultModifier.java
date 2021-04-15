@@ -121,7 +121,7 @@ public class DefaultModifier implements ItemModifier {
     public static Builder builder() {return new Builder(); }
     public static class Builder {
         private BiFunction<Player, ItemStack, Component> displayName;
-        private DynamicLore lore;
+        private DynamicLore lore = DynamicLore.of(Collections.emptyList());
         private int customModelData;
         private Set<AttributeModifierContainer> attributeModifiers = new HashSet<>();
         private Consumer<ItemStack> extra = i -> {};
