@@ -12,6 +12,11 @@
       <option name="url" value="https://oss.sonatype.org/content/groups/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="aikar" />
+      <option name="name" value="aikar" />
+      <option name="url" value="https://repo.aikar.co/content/groups/aikar/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="sonatype-oss-snapshots" />
       <option name="name" value="sonatype-oss-snapshots" />
       <option name="url" value="https://oss.sonatype.org/content/repositories/snapshots/" />

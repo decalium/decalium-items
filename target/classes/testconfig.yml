@@ -1,0 +1,7 @@
+test:
+  attribute: GENERIC_ATTACK_SPEED
+  modifier:
+    name: hello
+    amount: 3
+    operation: ADD_NUMBER
+    slot: HAND

@@ -1,16 +1,21 @@
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
-import java.util.List;
 
 public class CompilationTest {
     public static void main(String[] args) {
-            List<String> eba = new ArrayList<>(Arrays.asList("test", "test2"));
-            List<String> eb2 = new ArrayList<>(Arrays.asList("ebin", "ebi3"));
-            ArrayList<String> eb3 = new ArrayList<>(eba);
-            eb3.addAll(eb2);
-            System.out.println(String.join("\n", eb3));
-            System.out.println(eb2);
-            System.out.println(eb3.subList(eba.size(), eb3.size()));
+            byte[] bytes = new byte[] {1, 2, 3, 4};
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(bytes);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Arrays.toString(bos.toByteArray()));
+
 
     }
 }
