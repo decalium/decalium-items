@@ -24,8 +24,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>15</source>
-                    <target>15</target>
+                    <source>17</source>
+                    <target>17</target>
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -47,13 +47,39 @@
                             <relocations>
                                 <relocation>
                                     <pattern>co.aikar.commands</pattern>
-                                    <shadedPattern>com.manya.acf</shadedPattern> <!-- Replace this -->
+                                    <shadedPattern>me.gepronix.libraries.acf</shadedPattern> <!-- Replace this -->
                                 </relocation>
                                 <relocation>
                                     <pattern>co.aikar.locales</pattern>
-                                    <shadedPattern>com.manya.locales</shadedPattern> <!-- Replace this -->
+                                    <shadedPattern>me.gepronix.libraries.locales</shadedPattern> <!-- Replace this -->
+                                </relocation>
+                                <relocation>
+                                    <pattern>space.arim.dazzleconf</pattern>
+                                    <shadedPattern>me.gepronix.libraries.dazzleconf</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.manya</pattern>
+                                    <shadedPattern>me.gepronix.libraries.pdt</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.spongepowered.configurate</pattern>
+                                    <shadedPattern>me.gepronix.libraries.configurate</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>io.leangen.geantyref</pattern>
+                                    <shadedPattern>me.gepronix.libraries.geantyref</shadedPattern>
                                 </relocation>
                             </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
@@ -93,13 +119,18 @@
             <id>aikar</id>
             <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
+        <repository>
+            <id>decalium-repository-releases</id>
+            <name>Decalium Network Repository</name>
+            <url>https://repo.decalium.ru/releases</url>
+        </repository>
             <!-- ... -->
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>com.destroystokyo.paper</groupId>
-            <artifactId>paper</artifactId>
+            <groupId>net.pl3x.purpur</groupId>
+            <artifactId>purpur-api</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -116,24 +147,35 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.manya</groupId>
+            <artifactId>persistent-data-types</artifactId>
+            <version>1.0.23</version>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>13.0</version>
+            <version>23.0.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>space.arim.dazzleconf</groupId>
-            <artifactId>dazzleconf-ext-snakeyaml</artifactId>
-            <version>1.2.0-M2</version>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>configurate-yaml</artifactId>
+            <version>4.1.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>error_prone_annotations</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>co.aikar</groupId>
             <artifactId>acf-paper</artifactId> <!-- Don't forget to replace this -->
-            <version>0.5.0-SNAPSHOT</version> <!-- Replace this as well -->
+            <version>0.5.1-SNAPSHOT</version> <!-- Replace this as well -->
             <!-- Example Platform/Version
             <artifactId>acf-paper</artifactId>
             <version>0.5.0-SNAPSHOT</version>

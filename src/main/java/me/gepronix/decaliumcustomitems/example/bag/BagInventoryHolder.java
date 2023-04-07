@@ -1,7 +1,7 @@
 package me.gepronix.decaliumcustomitems.example.bag;
 
 import me.gepronix.decaliumcustomitems.gui.GUI;
-import me.gepronix.decaliumcustomitems.item.WrappedStack;
+import me.gepronix.decaliumcustomitems.item.StackOfItems;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -14,19 +14,22 @@ import java.util.Arrays;
 public class BagInventoryHolder implements GUI {
     private final Inventory inventory;
     private final ItemStack bag;
+
     @Override
     public @NotNull Inventory getInventory() {
         return inventory;
     }
+
     public BagInventoryHolder(ItemStack bag, BagMeta meta) {
         this.bag = bag;
         inventory = Bukkit.createInventory(this, 6 * 9, Component.text("Мешок"));
         inventory.setContents(meta.content().toArray(new ItemStack[0]));
 
     }
+
     @Override
     public void onClose(InventoryCloseEvent e) {
-        WrappedStack stack = WrappedStack.of(bag);
+        StackOfItems stack = StackOfItems.of(bag);
         BagMeta meta = stack.getCustomMeta().map(BagMeta.class::cast)
                 .orElseGet(BagMeta.Factory.INSTANCE::createDefault);
         meta.setContent(Arrays.asList(inventory.getContents()));

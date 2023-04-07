@@ -7,7 +7,11 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class CooldownableMeta implements CustomMeta {
     private long lastUsage;
-    public long lastUsage() {return lastUsage; }
+
+    public long lastUsage() {
+        return lastUsage;
+    }
+
     public void setLastUsage(long value) {
         lastUsage = value;
     }
@@ -23,8 +27,12 @@ public class CooldownableMeta implements CustomMeta {
 
     public static class Factory implements ItemMetaFactory<CooldownableMeta> {
         public static final Factory INSTANCE = new Factory();
-        private Factory() {}
+
+        private Factory() {
+        }
+
         private static final NamespacedKey LAST_USAGE = new NamespacedKey(DecaliumCustomItems.get(), "last_usage");
+
         @Override
         public void save(CooldownableMeta meta, PersistentDataContainer to) {
             to.set(LAST_USAGE, PersistentDataType.LONG, meta.lastUsage);

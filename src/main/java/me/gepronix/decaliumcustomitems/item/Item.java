@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public interface Item {
     /**
      * Returns a key of Item
+     *
      * @return item key
      */
     @NotNull
@@ -19,6 +20,7 @@ public interface Item {
 
     /**
      * original material that custom material based on.
+     *
      * @return original material
      */
     @NotNull

@@ -2,7 +2,6 @@ package me.gepronix.decaliumcustomitems.example;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
-import com.manya.decaliumcustomitems.event.*;
 import me.gepronix.decaliumcustomitems.event.*;
 import me.gepronix.decaliumcustomitems.item.Item;
 import me.gepronix.decaliumcustomitems.item.modifier.ItemModifier;
@@ -22,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-import static net.kyori.adventure.text.Component.*;
+import static net.kyori.adventure.text.Component.text;
 
 public class InstantTntItem implements Item, Triggerable {
     private final NamespacedKey key;
@@ -30,6 +29,7 @@ public class InstantTntItem implements Item, Triggerable {
     private final Material original = Material.PLAYER_HEAD;
     private final EventTriggerHolder triggerHolder = new EventTriggerHolderImpl();
     private final ItemModifier modifier;
+
     public InstantTntItem(Plugin plugin) {
         this.key = new NamespacedKey(plugin, "instant_tnt");
         this.modifier = ItemModifierImpl.builder()
@@ -55,6 +55,7 @@ public class InstantTntItem implements Item, Triggerable {
 
 
     }
+
     @NotNull
     @Override
     public EventTriggerHolder eventTriggerHolder() {
@@ -78,11 +79,13 @@ public class InstantTntItem implements Item, Triggerable {
     public ItemModifier modifier() {
         return modifier;
     }
+
     private void onBlockPlace(BlockPlaceEvent event, ItemTriggerContext context) {
         Location blockLocation = event.getBlock().getLocation();
         blockLocation.getWorld().createExplosion(blockLocation, 8, false, false, event.getPlayer());
 
     }
+
     static {
         HEAD_PROFILE = Bukkit.createProfile(UUID.randomUUID());
         HEAD_PROFILE.setProperty(new ProfileProperty("textures",

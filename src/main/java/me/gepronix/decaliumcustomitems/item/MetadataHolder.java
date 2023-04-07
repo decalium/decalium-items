@@ -8,7 +8,6 @@ import me.gepronix.decaliumcustomitems.item.meta.ItemMetaFactory;
  */
 public interface MetadataHolder {
     /**
-     *
      * @return Meta factory
      */
     ItemMetaFactory<? extends CustomMeta> metaFactory();

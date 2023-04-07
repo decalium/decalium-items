@@ -1,0 +1,8 @@
+material: 'minecraft:golden_hoe'
+key: 'items:gauss'
+display-name: 'Гаусс'
+lore:
+  - 'Пкм по блоку для прыжка'
+attributes:
+  - type: GENERIC_ATTACK_DAMAGE
+    amount: 0.1

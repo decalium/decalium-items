@@ -1,0 +1,12 @@
+material: 'minecraft:iron_sword'
+key: 'items:katana_sword'
+display-name: 'Катана'
+lore:
+  - 'ПКМ для рывка'
+  - '============='
+attributes:
+  - type: GENERIC_ATTACK_DAMAGE
+    amount: 5
+  - type: GENERIC_ATTACK_SPEED
+    amount: 2
+cooldown: 5

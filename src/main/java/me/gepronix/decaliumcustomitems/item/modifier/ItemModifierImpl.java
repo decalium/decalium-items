@@ -1,5 +1,6 @@
 package me.gepronix.decaliumcustomitems.item.modifier;
 
+import com.manya.pdc.DataTypes;
 import me.gepronix.decaliumcustomitems.DecaliumCustomItems;
 import me.gepronix.decaliumcustomitems.utils.AttributeModifierContainer;
 import me.gepronix.decaliumcustomitems.utils.DataType;
@@ -21,11 +22,12 @@ public class ItemModifierImpl implements ItemModifier {
     private static final NamespacedKey DYNAMIC_LORE_SIZE = new NamespacedKey(DecaliumCustomItems.get(), "dynamic_lore_size");
 
     private final DynamicComponent displayName;
-    private final DynamicLore lore;
+	private final DynamicLore lore;
     private final int customModelData;
     private final Consumer<ItemStack> extraModifier;
     private final BiConsumer<LivingEntity, ItemStack> visualModifier, visualUnModifier;
     private final Set<AttributeModifierContainer> attributes;
+
     private ItemModifierImpl(
             DynamicComponent displayName,
             DynamicLore lore,
@@ -36,7 +38,7 @@ public class ItemModifierImpl implements ItemModifier {
             BiConsumer<LivingEntity, ItemStack> visualUnModifier
     ) {
         this.displayName = displayName;
-        this.lore = lore;
+		this.lore = lore;
         this.customModelData = customModelData;
         this.attributes = attributes;
         this.visualModifier = visualModifier;
@@ -49,11 +51,12 @@ public class ItemModifierImpl implements ItemModifier {
     public void modify(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         attributes.forEach(a ->
-            a.apply(meta)
+                a.apply(meta)
         );
-        if(customModelData != 0) meta.setCustomModelData(customModelData);
-        extraModifier.accept(item);
+        if (customModelData != 0) meta.setCustomModelData(customModelData);
+
         item.setItemMeta(meta);
+		extraModifier.accept(item);
     }
 
     @Override
@@ -63,15 +66,15 @@ public class ItemModifierImpl implements ItemModifier {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         PersistentDataContainer protocolData = container.getAdapterContext().newPersistentDataContainer();
         boolean hasDisplayName = false;
-        if(!meta.hasDisplayName()) {
+        if (!meta.hasDisplayName()) {
             meta.displayName(displayName.apply(entity, item));
         } else {
             hasDisplayName = true;
 
         }
-        protocolData.set(HAS_DISPLAY_NAME, DataType.BOOLEAN, hasDisplayName);
+        protocolData.set(HAS_DISPLAY_NAME, DataTypes.BOOLEAN, hasDisplayName);
 
-        if(!result.isEmpty()) {
+        if (!result.isEmpty()) {
             List<Component> newLore = new ArrayList<>(result);
             protocolData.set(DYNAMIC_LORE_SIZE, PersistentDataType.INTEGER, result.size());
             if (meta.hasLore()) newLore.addAll(meta.lore());
@@ -89,10 +92,10 @@ public class ItemModifierImpl implements ItemModifier {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer protocolData = meta.getPersistentDataContainer().get(PROTOCOL_DATA, PersistentDataType.TAG_CONTAINER);
         meta.getPersistentDataContainer().remove(PROTOCOL_DATA);
-        if(!protocolData.get(HAS_DISPLAY_NAME, DataType.BOOLEAN))
+        if (!protocolData.get(HAS_DISPLAY_NAME, DataTypes.BOOLEAN))
             meta.displayName(null);
 
-        if(protocolData.has(DYNAMIC_LORE_SIZE, PersistentDataType.INTEGER)) {
+        if (meta.lore() != null && protocolData.has(DYNAMIC_LORE_SIZE, PersistentDataType.INTEGER)) {
             meta.lore(meta.lore().subList(protocolData.get(DYNAMIC_LORE_SIZE, PersistentDataType.INTEGER), meta.lore().size()));
         }
         item.setItemMeta(meta);
@@ -101,23 +104,30 @@ public class ItemModifierImpl implements ItemModifier {
     }
 
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
-    public static Builder builder() {return new Builder(); }
     public static class Builder {
         private DynamicComponent displayName = DynamicComponent.of(null);
         private DynamicLore lore = DynamicLore.of(Collections.emptyList());
         private int customModelData;
         private Set<AttributeModifierContainer> attributeModifiers = new HashSet<>();
-        private Consumer<ItemStack> modifier = i -> {};
-        private BiConsumer<LivingEntity, ItemStack> visualModifier = (e, i) -> {};
-        private BiConsumer<LivingEntity, ItemStack> visualUnModifier = (e, i) -> {};
+        private Consumer<ItemStack> modifier = null;
+        private BiConsumer<LivingEntity, ItemStack> visualModifier = (e, i) -> {
+        };
+        private BiConsumer<LivingEntity, ItemStack> visualUnModifier = (e, i) -> {
+        };
+
         private Builder() {
 
         }
+
         public Builder name(Component name) {
             this.displayName = DynamicComponent.of(name);
-            return this;
+            return this.modifier(item -> item.editMeta(m -> m.displayName(name)));
         }
+
         public Builder name(DynamicComponent name) {
             this.displayName = name;
             return this;
@@ -127,29 +137,36 @@ public class ItemModifierImpl implements ItemModifier {
             this.lore = lore;
             return this;
         }
+
         public Builder lore(List<Component> lore) {
             this.lore = DynamicLore.of(lore);
-            return this;
+            return this.modifier(i -> i.editMeta(meta -> meta.lore(lore)));
         }
+
         public Builder modifier(Consumer<ItemStack> modifier) {
-            this.modifier = modifier;
+            this.modifier = this.modifier == null ? modifier : this.modifier.andThen(modifier);
             return this;
         }
+
         public Builder visual(BiConsumer<LivingEntity, ItemStack> visualModifier, BiConsumer<LivingEntity, ItemStack> visualUnModifier) {
             this.visualModifier = visualModifier;
             this.visualUnModifier = visualUnModifier;
             return this;
         }
+
         public Builder customModelData(int value) {
             customModelData = value;
             return this;
         }
 
         public Builder attributeModifiers(AttributeModifierContainer... attributes) {
-            attributeModifiers = new HashSet<>(Arrays.asList(attributes));
-            return this;
+            return attributeModifiers(Arrays.asList(attributes));
         }
 
+		public Builder attributeModifiers(Collection<AttributeModifierContainer> containers) {
+			attributeModifiers = new HashSet<>(containers);
+			return this;
+		}
 
 
         public ItemModifierImpl build() {
@@ -158,7 +175,7 @@ public class ItemModifierImpl implements ItemModifier {
                     lore,
                     customModelData,
                     attributeModifiers,
-                    modifier,
+                    modifier == null ? i -> {} : modifier,
                     visualModifier,
                     visualUnModifier
             );

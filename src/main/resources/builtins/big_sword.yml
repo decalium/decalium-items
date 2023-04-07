@@ -1,0 +1,10 @@
+material: 'minecraft:netherite_sword'
+key: 'items:big_sword'
+display-name: 'Тяжелый меч'
+attributes:
+  - type: GENERIC_ATTACK_DAMAGE
+    amount: 7
+  - type: GENERIC_ATTACK_SPEED
+    amount: -3.4
+  - type: GENERIC_ATTACK_KNOCKBACK
+    amount: 5

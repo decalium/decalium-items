@@ -1,0 +1,8 @@
+material: 'minecraft:diamond_axe'
+key: 'items:combo_axe'
+display-name: 'Combo Axe'
+attributes:
+  - type: GENERIC_ATTACK_DAMAGE
+    amount: 7
+  - type: GENERIC_ATTACK_SPEED
+    amount: 1337

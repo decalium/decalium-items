@@ -1,14 +1,13 @@
 package me.gepronix.decaliumcustomitems.protocol.wrapper;
 
-import com.comphenix.protocol.wrappers.Pair;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.inventory.ItemStack;
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers.ItemSlot;
+import com.comphenix.protocol.wrappers.Pair;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -92,15 +91,11 @@ public class WrapperPlayServerEntityEquipment extends AbstractPacket {
     public void setItem(ItemStack value) {
         handle.getItemModifier().write(0, value);
     }
+
     public List<Pair<ItemSlot, ItemStack>> getSlotStackPairs() {
         return handle.getSlotStackPairLists().read(0);
     }
 
-    /**
-     * Set a ItemSlot - ItemStack pair.
-     * @param slot The slot the item will be equipped in. If matches an existing pair, will overwrite the old one
-     * @param item The item to equip
-     */
     public void setSlotStackPairs(List<Pair<ItemSlot, ItemStack>> pairs) {
 
         handle.getSlotStackPairLists().write(0, pairs);

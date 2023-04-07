@@ -1,8 +1,8 @@
 name: DecaliumCustomItems
 version: 1.1.1
-main: com.manya.decaliumcustomitems.DecaliumCustomItems
+main: me.gepronix.decaliumcustomitems.DecaliumCustomItems
 api-version: 1.16
-authors: [ manya ]
+authors: [ gepronix ]
 depend:
   - ProtocolLib
 description: super cool

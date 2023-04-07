@@ -1,10 +1,10 @@
 package me.gepronix.decaliumcustomitems.example.bag;
 
+import com.manya.pdc.DataTypes;
 import me.gepronix.decaliumcustomitems.DecaliumCustomItems;
 import me.gepronix.decaliumcustomitems.item.meta.CustomMeta;
 import me.gepronix.decaliumcustomitems.item.meta.ItemMetaFactory;
-import me.gepronix.decaliumcustomitems.utils.DataType;
-import me.gepronix.decaliumcustomitems.utils.persistentdatatype.collection.ByteArrayCollectionDataType;
+import me.gepronix.decaliumcustomitems.utils.AirSafeItemDataType;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -17,13 +17,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BagMeta implements CustomMeta {
-    private static final PersistentDataType<byte[], List<ItemStack>> ITEM_STACK_LIST_DATA_TYPE = new ByteArrayCollectionDataType<>(DataType.ITEM_STACK, ArrayList::new);
+    private static final PersistentDataType<?, List<ItemStack>> ITEM_STACK_LIST_DATA_TYPE = DataTypes.list(AirSafeItemDataType.ITEM_STACK);
     private static final ItemStack AIR = new ItemStack(Material.AIR);
     private List<ItemStack> content;
+
     private BagMeta(List<ItemStack> content) {
         this.content = content;
     }
-    public List<ItemStack> content() {return content; }
+
+    public List<ItemStack> content() {
+        return content;
+    }
+
     public void setContent(List<ItemStack> content) {
         this.content = content;
     }
@@ -36,8 +41,12 @@ public class BagMeta implements CustomMeta {
 
     public static class Factory implements ItemMetaFactory<BagMeta> {
         public static final Factory INSTANCE = new Factory();
-        private Factory() {}
+
+        private Factory() {
+        }
+
         private static final NamespacedKey CONTENT = new NamespacedKey(DecaliumCustomItems.get(), "content");
+
         @Override
         public void save(BagMeta meta, PersistentDataContainer to) {
             to.set(
@@ -55,7 +64,7 @@ public class BagMeta implements CustomMeta {
 
         @Override
         public BagMeta createDefault() {
-            return new BagMeta(Arrays.asList());
+            return new BagMeta(List.of());
         }
     }
 

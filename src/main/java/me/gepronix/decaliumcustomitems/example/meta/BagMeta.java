@@ -11,9 +11,11 @@ public class BagMeta {
     public ItemStack[] items() {
         return items;
     }
+
     public UUID owner() {
         return owner;
     }
+
     public BagMeta(UUID uuid, ItemStack[] items) {
         this.owner = uuid;
         this.items = items;
