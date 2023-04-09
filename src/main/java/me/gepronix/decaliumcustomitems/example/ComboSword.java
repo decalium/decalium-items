@@ -59,7 +59,7 @@ public final class ComboSword implements BuildableItem, Listener {
 	public ComboSword(Plugin plugin) {
 
 		this.plugin = plugin;
-		this.key = new NamespacedKey(plugin, "combo_axe.yml");
+		this.key = new NamespacedKey(plugin, "combo_axe");
 	}
 	@Override
 	public Item build(ConfigurationNode node) throws SerializationException {
